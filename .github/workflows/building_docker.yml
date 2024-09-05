@@ -45,6 +45,7 @@ jobs:
        - uses: utilizable/github-actions/.github/actions/linting/docker/hadolint@develop
          with:
            file: ${{ needs.prepare.outputs.dockerfilepath }}
+           rules: "DL3003,SC3037"
            
   # -----------------
   # Building & Pushing to Github registry 
