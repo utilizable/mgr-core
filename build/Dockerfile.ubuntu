@@ -18,7 +18,7 @@ RUN \
       && dpkg --add-architecture i386 \
       && apt-get update \
     && \
-    echo "**** Install tools ****" \
+    echo "**** Install General Tools ****" \
       && apt-get install -y --no-install-recommends \
           software-properties-common \
           bash \
@@ -28,6 +28,9 @@ RUN \
           jq \
           gnupg2 \
           ca-certificates \
+          dbus-x11 \
+          supervisor \
+          xvfb \
     && \
     echo "**** Install Intel media drivers and VAAPI ****" \
       && apt-get install -y --no-install-recommends \
@@ -153,23 +156,23 @@ RUN \
            grep -oP '[0-9]+(\.[0-9]+)(\.[0-9]+)' \
          ) \
       && mkdir -pm 755 /etc/vulkan/icd.d/ \
-      && echo -e "{ \n\
+      && printf "{ \n\
                     \"file_format_version\" : \"1.0.0\",\n\
                     \"ICD\": { \n\
                       \"library_path\": \"libGLX_nvidia.so.0\", \n\
                       \"api_version\" : \"${VULKAN_API_VERSION}\"\n\
                     } \n\
-                  }" \
+                 }" \
          > /etc/vulkan/icd.d/nvidia_icd.json \
     && \
     echo "**** EGL Configuration **** " \
       && mkdir -pm 755 /usr/share/glvnd/egl_vendor.d/ \
-      && echo -e "{ \n\
+      && printf "{ \n\
                     \"file_format_version\" : \"1.0.0\", \n\
                     \"ICD\": { \n\
                       \"library_path\": \"libEGL_nvidia.so.0\" \n\
                     } \n\
-                  }" \
+                 }" \
          > /usr/share/glvnd/egl_vendor.d/10_nvidia.json \
     echo "**** Section cleanup ****" \
       && apt-get clean autoclean -y \
