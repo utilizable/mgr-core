@@ -9,7 +9,7 @@
 #
 ############################################################
 
-FROM ghcr.io/utilizable/mgr-base:0.3.0
+FROM ghcr.io/utilizable/mgr-base:1.0.0
 
 RUN \
     echo "**** Install Core (EGL) ****" \
